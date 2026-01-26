@@ -1,0 +1,558 @@
+# VOICEGUARD
+## Product Requirements Document (PRD)
+
+---
+
+## 1. EXECUTIVE SUMMARY
+
+**Product Name:** VoiceGuard
+
+**One-Line Description:** 
+VoiceGuard is an AI-powered voice authentication app that protects families from AI voice cloning scams by verifying caller identity in real-time and forcing suspicious callers to answer security questions only family members would know.
+
+**Problem:**
+Scammers are using AI voice cloning technology to impersonate family members and phish money from vulnerable individuals. These synthetic voices can sound nearly identical to real family members, even replicating emotional cues like crying. Victims lose thousands of dollars before realizing they've been scammed.
+
+**Solution:**
+VoiceGuard uses real-time voice analysis, biometric voice enrollment, and security question verification to detect AI-cloned voices and prevent fraud before money is lost.
+
+**Target Market:** U.S. families, with initial focus on households with elderly members or parents living abroad.
+
+**Mission Statement:** 
+Prevent families from receiving fraud scam calls from voice cloning by creating an AI voice detection app that authenticates callers in real-time.
+
+---
+
+## 2. PROBLEM STATEMENT
+
+### 2.1 The Crisis
+AI voice cloning technology has become accessible and affordable, enabling scammers to commit fraud at scale:
+
+- **How the scam works:**
+  1. Scammers research family members on social media, collecting voice samples from videos, posts, or public appearances
+  2. Using AI tools (available online), they clone the family member's voice
+  3. They call victims claiming to be a family member in distress (traveling abroad, medical emergency, legal trouble)
+  4. They request emergency money transfers
+  5. The cloned voice sounds nearly identical, making victims believe it's really their loved one
+  6. Even emotional manipulation (crying, panic) can be replicated through voice engineering
+
+- **Why it's dangerous:**
+  - Victims act fast without verifying identity (emotional urgency)
+  - Current phone systems offer NO protection
+  - Voice is harder to fake-detect than text or images
+  - Elderly populations are most vulnerable
+  - Average loss per victim: $5,000-$50,000+
+  - Many victims never recover emotionally from betrayal
+
+### 2.2 Current Solutions (Inadequate)
+- Phone company fraud alerts (catch number spoofing, not voice cloning)
+- Family awareness campaigns (reactive, not protective)
+- Call blocking apps (can't block unknown family members)
+- No real-time voice authentication exists at consumer level
+
+### 2.3 Market Gap
+**There is no consumer app that detects and blocks AI-cloned voices in real-time.**
+
+---
+
+## 3. GOALS & SUCCESS METRICS
+
+### 3.1 Product Goals
+1. **Prevent fraud before money transfers** — Detect cloned voices before victims send money
+2. **Authenticate family members** — Verify incoming calls are really from trusted contacts
+3. **Be accessible to all families** — Works on smartphones and feature phones
+4. **Build trust through simplicity** — Easy enrollment, clear alerts, no technical jargon
+
+### 3.2 Success Metrics (6-Month Target)
+
+| Metric | Target | Why It Matters |
+|--------|--------|----------------|
+| **Users Onboarded** | 50,000 | Proof of market demand |
+| **Fraud Attempts Blocked** | 10,000+ | Core product effectiveness |
+| **Average Detection Accuracy** | 95%+ | Must reliably catch synthetic voices |
+| **User Retention (30-day)** | 70%+ | App stays useful & relevant |
+| **Family Enrollments** | 300,000+ | Network effect (more family = more protection) |
+| **Scam Report Submissions** | 5,000+ | Community feedback loop |
+| **Media/PR Coverage** | 20+ articles | Awareness in target demographic |
+| **Customer Satisfaction (NPS)** | 50+ | Parents/elderly satisfied |
+
+---
+
+## 4. USER PERSONAS
+
+### Persona 1: Margaret (Elderly, High Risk)
+- **Age:** 68
+- **Background:** Retired teacher, lives alone, widow
+- **Tech Level:** Moderate (can use smartphone, not always comfortable)
+- **Motivation:** Protect herself and stay independent
+- **Pain Point:** Worried about scams, has heard stories from friends
+- **How she'll use VoiceGuard:** Enroll her children's voices, gets alerts when unknown callers claim to be family
+- **Success:** Receives a suspicious call claiming to be her son, VoiceGuard alerts her it's fake, she hangs up and calls son to verify
+
+### Persona 2: James (Adult Child, Protective)
+- **Age:** 45
+- **Background:** Business professional, lives in different state from elderly parents
+- **Tech Level:** High (uses apps daily, understands security)
+- **Motivation:** Protect aging parents from fraud
+- **Pain Point:** Can't monitor parents' calls, worried about their vulnerability
+- **How he'll use VoiceGuard:** Sets up VoiceGuard on parents' phones, monitors family dashboard, gets alerts when suspicious calls happen
+- **Success:** Mom gets a call from "James" asking for money. VoiceGuard flags it as synthetic. James receives alert, confirms it's fraud, calls mom immediately
+
+### Persona 3: Sofia (Young Adult, Tech Savvy)
+- **Age:** 28
+- **Background:** Software engineer, first-gen immigrant
+- **Tech Level:** Expert
+- **Motivation:** Protect entire family in US and relatives abroad from international scams
+- **Pain Point:** Family spread across countries, vulnerable to "family in distress" scams
+- **How she'll use VoiceGuard:** Enrolls all family member voices, uses advanced features (custom questions, multi-language), reports scam numbers to community database
+- **Success:** Recognizes a synthetic voice calling her grandmother claiming to be Sofia, blocks and reports number
+
+---
+
+## 5. USE CASES & USER STORIES
+
+### Use Case 1: Enrollment (Setup)
+**User Story:** 
+"As a concerned parent, I want to enroll my elderly mom's voice and my siblings' voices in VoiceGuard so that when calls come in claiming to be family, the app can verify if it's really them."
+
+**Flow:**
+1. User downloads VoiceGuard app
+2. Creates account (phone number + password)
+3. Adds trusted family members (name, relationship, phone number)
+4. Records 30-60 second voice sample from each family member (greeting, message, etc.)
+5. App stores encrypted voice biometrics in secure vault
+6. Setup complete — protection active
+
+**Success Criteria:**
+- User can enroll 5+ family members in <5 minutes
+- Voice samples are clear and usable for detection
+- Encryption is secure (voice data never transmitted in plain text)
+
+---
+
+### Use Case 2: Incoming Call Verification (Real-Time Protection)
+**User Story:**
+"As a user, I want VoiceGuard to analyze incoming calls in real-time so that if a scammer calls claiming to be my son, the app immediately alerts me before I give any information."
+
+**Flow:**
+1. Unknown caller dials user's phone
+2. VoiceGuard intercepts the call (before/during first ring)
+3. App analyzes caller's voice against enrolled family members
+4. AI detection checks for synthetic voice markers
+5. App returns result in <3 seconds:
+   - **Green (Verified):** "This is really John (95% match). Safe to answer."
+   - **Yellow (Suspicious):** "Warning: Caller claims to be John, but voice shows signs of AI cloning. Proceed with caution."
+   - **Red (Blocked):** "This is a synthetic voice. Caller blocked. Alert sent to your family dashboard."
+6. User decides to answer, block, or send to security question
+
+**Success Criteria:**
+- Detection accuracy: 95%+
+- Response time: <3 seconds
+- False positives: <2% (don't want to block real family)
+- False negatives: <5% (catch most scams)
+
+---
+
+### Use Case 3: Security Question Challenge
+**User Story:**
+"As a security-conscious user, I want suspicious callers to answer custom security questions that only my real family would know so that I can verify identity before giving out money."
+
+**Flow:**
+1. VoiceGuard detects suspicious/synthetic voice
+2. User taps "Ask Security Question" button
+3. Pre-recorded security question plays to caller:
+   - "What was the name of our family dog growing up?"
+   - "What city was I born in?"
+   - "What's our favorite family vacation spot?"
+4. Scammer can't answer (doesn't have the info)
+5. Real family member answers correctly
+6. Call either continues (verified) or ends (fraud)
+
+**Success Criteria:**
+- Questions are easy for real family to answer
+- Questions are impossible for scammers to guess
+- System records answers for evidence/reporting
+
+---
+
+### Use Case 4: Scam Reporting & Community Protection
+**User Story:**
+"As a responsible user, I want to report suspicious/scam numbers to VoiceGuard's community database so that other families get protected from the same scammer."
+
+**Flow:**
+1. User receives and blocks a fraudulent call
+2. User taps "Report This Scam" in the app
+3. Reports the phone number, caller claimed identity, and timestamp
+4. VoiceGuard adds number to community blacklist
+5. Other users get instant warnings when that number calls
+6. Data is shared with law enforcement (FBI IC3, FTC)
+
+**Success Criteria:**
+- Reporting takes <30 seconds
+- Community database grows to 100,000+ blocked numbers in 6 months
+- Reports result in law enforcement action
+
+---
+
+## 6. CORE FEATURES & REQUIREMENTS
+
+### 6.1 MVP Features (Launch - Month 3)
+
+| Feature | Description | Priority | Technical Notes |
+|---------|-------------|----------|-----------------|
+| **Voice Enrollment** | Record and store family member voice samples securely | P0 | Encrypted biometric storage, 30-60 sec samples |
+| **Real-Time Voice Analysis** | Detect synthetic/AI-cloned voices on incoming calls | P0 | ML model for voice authenticity detection |
+| **Verification Alerts** | Green/Yellow/Red alerts for incoming calls | P0 | Must be <3 sec response time |
+| **Security Question Challenge** | Custom Q&A to verify caller identity | P0 | Pre-recorded questions + answer logging |
+| **Call Blocking** | Block detected synthetic voices automatically | P0 | Integration with phone OS |
+| **Scam Reporting** | Report suspicious numbers to community DB | P0 | Anonymous reporting, data persistence |
+| **Family Dashboard** | Parents/guardians monitor family member alerts | P0 | Multi-user access, alerts by phone |
+| **SMS Alerts** | Text alerts for suspicious calls (feature phone support) | P0 | Works on basic phones |
+| **Account Management** | Sign up, login, manage trusted contacts | P0 | Phone number + password authentication |
+
+### 6.2 Post-MVP Features (Months 4-6+)
+
+| Feature | Description | Priority | Business Impact |
+|---------|-------------|----------|-----------------|
+| **Multi-Language Support** | UI + voice detection in Spanish, Mandarin, etc. | P1 | Global expansion, immigrant markets |
+| **Voice Biometric Matching** | Match caller voice directly to enrolled family member | P1 | Higher accuracy verification |
+| **Behavioral Analytics** | Learn calling patterns, flag unusual calls | P1 | Proactive fraud detection |
+| **Integration with Banks** | Alert banks before wire transfers | P1 | Prevent money loss at source |
+| **AI Training Data** | Contribute anonymized data to improve detection models | P1 | Continuous improvement |
+| **Emergency SOS** | One-tap alert to all family members if scam detected | P1 | Family coordination |
+| **Call Recording** | Record calls for evidence/law enforcement | P2 | Legal in one-party consent states |
+| **Deepfake Video Detection** | Extend to detect cloned video calls | P2 | Future-proof against video scams |
+| **Enterprise/Bank Partnerships** | White-label VoiceGuard for institutions | P2 | B2B revenue stream |
+| **Government Integration** | Partner with agencies (FBI, FTC, AARP) | P2 | Credibility + funding |
+
+---
+
+## 7. TECHNICAL OVERVIEW
+
+### 7.1 High-Level Architecture
+
+```
+[Incoming Call] 
+    ↓
+[VoiceGuard Intercepts Call]
+    ↓
+[Real-Time Voice Analysis Engine]
+    - Extract audio features (frequency, tone, pitch)
+    - Compare against enrolled family voices
+    - Run through AI detection model (synthetic voice detection)
+    ↓
+[Decision Engine]
+    - Match score: 0-100%
+    - Synthetic probability: 0-100%
+    - Return: GREEN / YELLOW / RED
+    ↓
+[User Alert]
+    - In-app notification
+    - SMS alert (if enabled)
+    - Auto-block (if high synthetic probability)
+    - Security question prompt (if suspicious)
+```
+
+### 7.2 Core Technologies
+
+| Component | Technology | Why |
+|-----------|-----------|-----|
+| **Voice Biometrics** | Speaker Recognition AI (PyAudio, Librosa) | Industry standard for voice authentication |
+| **Synthetic Voice Detection** | Custom ML Model (TensorFlow/PyTorch) | Trained on real vs. AI-generated voice datasets |
+| **Real-Time Processing** | Edge ML (on-device inference) | Privacy + speed (<3 sec response) |
+| **Secure Storage** | AES-256 Encryption | HIPAA/GDPR compliant for voice data |
+| **Backend** | Node.js/Express + MongoDB | Scalable, handles millions of calls |
+| **Mobile App** | React Native | iOS + Android from single codebase |
+| **Feature Phone Support** | USSD + SMS | Works without internet (critical for elderly) |
+| **Database** | PostgreSQL (caller reputation DB) | Fast lookups, open-source, reliable |
+| **Cloud Hosting** | AWS (EC2, S3, Lambda) | Scalable, reliable, enterprise-grade |
+
+### 7.3 Data Privacy & Security
+
+- **Voice data:** Encrypted end-to-end, never stored in plain text
+- **Call logs:** Encrypted at rest, accessible only to user
+- **Compliance:** GDPR, CCPA, HIPAA, SOC 2 Type II
+- **Data deletion:** User can delete all data at any time
+- **No selling data:** Customer voice data is never sold or shared (except with law enforcement under court order)
+
+---
+
+## 8. USER FLOWS (Key Journeys)
+
+### Flow 1: First-Time User (Day 1)
+```
+Download App → Create Account → Add Family Members → Record Voices → Enable Alerts → Done
+(Time: ~5 min)
+```
+
+### Flow 2: Incoming Suspicious Call (Day-to-Day)
+```
+Scammer Calls → VoiceGuard Analyzes → Alert Appears → User Taps "Security Question" 
+→ Scammer Can't Answer → Call Blocks → Alert Sent to Family Dashboard
+(Time: <10 seconds)
+```
+
+### Flow 3: Reporting Scam
+```
+Receive Fraudulent Call → VoiceGuard Flags It → User Taps "Report Scam" 
+→ Number Added to Community Blacklist → Other Users Protected
+(Time: <30 seconds)
+```
+
+---
+
+## 9. MONETIZATION MODEL
+
+### 9.1 Revenue Streams
+
+| Model | Details | Pricing |
+|-------|---------|---------|
+| **Freemium Tier** | Basic protection (1 family member, limited alerts) | Free |
+| **Premium Individual** | Unlimited family members, advanced features | $9.99/month or $99/year |
+| **Family Plan** | Share protection across 5+ family members | $19.99/month or $199/year |
+| **Enterprise (Banks/Telecom)** | White-label solution, API access, custom SLA | Custom pricing |
+| **Government Contracts** | AARP partnerships, state/federal fraud prevention programs | Grants + contracts |
+| **Insurance Partnerships** | Bundled with homeowners/auto insurance | Revenue share |
+
+### 9.2 Unit Economics (Estimated)
+
+- **Customer Acquisition Cost (CAC):** $5-15 (organic, referral, PR)
+- **Lifetime Value (LTV):** $200-500 (2-3 year avg customer life @ $10/month)
+- **LTV:CAC Ratio:** 15-40x (healthy for SaaS)
+
+---
+
+## 10. TIMELINE & ROADMAP
+
+### Phase 1: MVP Launch (Months 1-3)
+
+**Month 1: Foundation**
+- [ ] Finalize voice biometric ML model (train on real vs. synthetic voice datasets)
+- [ ] Set up cloud infrastructure (AWS, databases, APIs)
+- [ ] Design iOS/Android app UI/UX
+- [ ] Build backend APIs (enrollment, call analysis, reporting)
+- [ ] Legal: GDPR/CCPA/HIPAA compliance review
+
+**Month 2: Development**
+- [ ] Implement voice enrollment feature
+- [ ] Build real-time voice analysis engine
+- [ ] Create security question system
+- [ ] Develop family dashboard
+- [ ] Internal testing & iteration
+
+**Month 3: Launch**
+- [ ] Beta testing with 100-500 users
+- [ ] Fix bugs, optimize detection accuracy
+- [ ] Create user documentation
+- [ ] Launch iOS + Android apps
+- [ ] PR/media outreach (news stories about voice cloning scams)
+
+**Month 3 End Goals:**
+- 50,000 users onboarded
+- 95%+ detection accuracy on test data
+- <3 second average response time
+- 70%+ 30-day retention
+
+---
+
+### Phase 2: Scale & Optimize (Months 4-6)
+
+**Month 4: Feature Expansion**
+- [ ] Multi-language support (Spanish, Mandarin, others)
+- [ ] Voice biometric matching (caller voice vs. enrolled voice)
+- [ ] Emergency SOS feature
+- [ ] Bank/wire transfer alerts
+- [ ] Advanced analytics dashboard
+
+**Month 5: Partnerships**
+- [ ] Outreach to major banks (Wells Fargo, Chase, BofA)
+- [ ] AARP partnership discussions
+- [ ] Law enforcement integration (FBI IC3, FTC)
+- [ ] Insurance company partnerships
+
+**Month 6: Optimize & Plan Series A**
+- [ ] Hit 500,000+ users
+- [ ] Expand to Canada, UK, Australia
+- [ ] Raise Series A funding ($5-10M)
+- [ ] Begin enterprise sales
+
+**Month 6 End Goals:**
+- 500,000+ users
+- 10,000+ scams prevented
+- 100,000+ community-reported scam numbers
+- $50K-100K MRR (if premium tier adoption is strong)
+
+---
+
+### Phase 3: Enterprise & Global (Months 7-12)
+
+- White-label solution for banks/telecom companies
+- Enterprise API for large institutions
+- Government contracts (federal fraud prevention)
+- Expand to 10+ countries
+- Develop deepfake video detection (Phase 4)
+
+---
+
+## 11. SUCCESS CRITERIA & KPIs
+
+### 11.1 Product Health Metrics
+
+| KPI | Target (Month 6) | How We Measure |
+|-----|-----------------|-----------------|
+| **Daily Active Users (DAU)** | 100,000+ | App analytics |
+| **Monthly Active Users (MAU)** | 500,000+ | App analytics |
+| **Churn Rate** | <5%/month | (Users lost / Starting users) |
+| **Voice Detection Accuracy** | 95%+ | Test against synthetic voice dataset |
+| **False Positive Rate** | <2% | Real family incorrectly flagged |
+| **Average Response Time** | <3 seconds | System logs |
+| **App Store Rating** | 4.5+ stars | App Store / Play Store reviews |
+
+### 11.2 Business Metrics
+
+| KPI | Target (Month 6) | How We Measure |
+|-----|-----------------|-----------------|
+| **Premium Conversion Rate** | 5-10% | (Paid users / Total users) |
+| **Monthly Recurring Revenue (MRR)** | $50K-100K | Stripe/payment logs |
+| **Customer Lifetime Value** | $200-500 | (Premium avg price × retention months) |
+| **CAC** | <$10 | (Marketing spend / New users) |
+| **Scams Prevented** | 10,000+ | Reported by users |
+| **Media Mentions** | 20+ | PR monitoring, Google News |
+| **User Retention (30-day)** | 70%+ | Users active 30 days after signup |
+
+### 11.3 Social Impact Metrics
+
+| KPI | Target (Month 6) | How We Measure |
+|-----|-----------------|-----------------|
+| **Money Saved for Users** | $10M+ | Scams prevented × avg fraud amount |
+| **Families Protected** | 500,000+ | Total users |
+| **Scam Numbers Reported** | 100,000+ | Community database size |
+| **Law Enforcement Referrals** | 1,000+ | Reports to FBI IC3 / FTC |
+| **Media Impact** | National coverage | NYT, CNN, AARP stories |
+
+---
+
+## 12. RISKS & MITIGATION
+
+| Risk | Impact | Likelihood | Mitigation |
+|------|--------|-----------|-----------|
+| **High false positives** | Users distrust app | Medium | Extensive testing, ML model refinement |
+| **Voice data breaches** | Privacy violation, lawsuits | Low | Military-grade encryption, SOC 2 compliance |
+| **Scammers adapt** | Techniques bypass detection | High | Continuous ML model updates, community feedback loop |
+| **Poor user adoption** | Not enough scale | Medium | Strong marketing, partnerships with AARP, banks |
+| **Legal liability** | Users blame app for missed scams | Medium | Clear terms of service, not marketed as 100% guarantee |
+| **Competitive entry** | Big tech companies build similar product | High | Move fast, build community, secure patents |
+| **Technical debt** | Slow development | Low | Clean code practices, regular refactoring |
+
+---
+
+## 13. COMPETITIVE LANDSCAPE
+
+### Current Competitors (Weak)
+
+| Competitor | What They Do | Why They're Limited |
+|------------|-------------|-------------------|
+| **Phone company fraud alerts** | Flag number spoofing | Can't detect voice cloning |
+| **Call blocking apps (TrueCaller, RoboKiller)** | Block known spam numbers | Reactive, not proactive |
+| **AARP Fraud Prevention** | Educational resources | No real-time protection |
+| **Family locate apps (Life360)** | Track family locations | Not security-focused |
+
+### Why VoiceGuard Wins
+- **Only app that detects AI-cloned voices in real-time**
+- **Focus on voice authentication** (not just blocking)
+- **Community-driven approach** (blacklist + reporting)
+- **Works on feature phones** (accessibility)
+- **Clear monetization** (freemium + B2B)
+
+---
+
+## 14. APPENDIX
+
+### A. Voice Cloning Scam Examples
+
+**Example 1: The Grandmother Scam (Updated with AI)**
+```
+Scammer → Researches Maria's family on Facebook
+        → Finds videos of her son Diego
+        → Uses AI voice cloning tool to clone Diego's voice
+        → Calls Maria at 2 AM: "Mama! I'm in Mexico City. I got in a car accident. 
+          I need $5,000 for bail or I'll go to jail!"
+        → Maria, panicked, sends $5,000 to stranger
+        → Realizes 30 minutes later: Diego was home the whole time
+
+With VoiceGuard:
+        → Call comes in
+        → VoiceGuard analyzes voice: "Warning - This voice shows signs of AI cloning"
+        → Maria gets alert before sending money
+        → She calls Diego directly to verify
+        → Fraud prevented
+```
+
+**Example 2: Traveling Son Scam**
+```
+Scammer → Clones son's voice
+        → Calls father: "Dad, my laptop broke. I can't access my bank account. 
+          Can you Western Union me $10,000? I'll pay you back."
+        → Father, believing it's his son, sends money
+        → Realizes it was a scam when son calls that evening
+
+With VoiceGuard:
+        → Real son's voice is enrolled
+        → Scammer calls
+        → VoiceGuard: "Voice doesn't match your son's profile. Suspicious."
+        → Father challenges caller with security question
+        → Scammer can't answer
+        → Call blocked, fraud prevented
+```
+
+### B. Glossary
+
+- **Voice Biometric:** Unique voice characteristics used for authentication (like fingerprints for voice)
+- **Synthetic Voice:** AI-generated voice that imitates a real person
+- **Voice Cloning:** Process of using AI to replicate someone's voice
+- **Speaker Recognition:** Technology that identifies who is speaking
+- **Deepfake:** AI-generated audio/video that imitates a real person
+- **Frequency Analysis:** Examining sound waves to detect authenticity
+- **ML Model:** Machine learning algorithm trained on data to make predictions
+
+### C. Resources & References
+
+- **Voice Cloning Technology:** ElevenLabs, PlayHT, Voice.ai
+- **AI Voice Detection Research:** Microsoft, Google, Meta research on synthetic voice detection
+- **Fraud Statistics:** FBI IC3 reports, FTC Consumer Sentinel Network
+- **GDPR/CCPA Compliance:** Legal templates, AWS compliance documentation
+
+---
+
+## 15. SIGN-OFF
+
+**Document Owner:** Juan Abraham  
+**Last Updated:** [Date]  
+**Version:** 1.0 (MVP Specification)  
+**Status:** Ready for Development
+
+**Approval Sign-offs:**
+
+| Role | Name | Date | Signature |
+|------|------|------|-----------|
+| Product Lead | | | |
+| Tech Lead | | | |
+| Investor/Stakeholder | | | |
+
+---
+
+## DOCUMENT NOTES
+
+This PRD is a living document. As VoiceGuard develops, sections should be updated to reflect:
+- Real user feedback from beta testing
+- Technical learnings from development
+- Market research and competitive changes
+- Adjusted timelines based on actual velocity
+- New features discovered during user interviews
+
+**Next Steps:**
+1. Gather feedback from team/stakeholders
+2. Finalize target launch date
+3. Assign sprint planning for Month 1 deliverables
+4. Begin ML model training with voice datasets
+5. Set up infrastructure and CI/CD pipeline
