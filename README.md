@@ -16,7 +16,7 @@ VoiceGuard aims to combine real-time voice analysis, biometric voice enrollment,
 
 ## Documents
 
-- Product Requirements: `VoiceGuard_Product_Requirements_Document.md`
+- Product Requirements: `docs/VoiceGuard_Product_Requirements_Document.md`
 
 ## Status
 
