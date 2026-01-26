@@ -1,0 +1,12 @@
+{
+  "name": "voiceguard",
+  "private": true,
+  "workspaces": [
+    "apps/*"
+  ],
+  "scripts": {
+    "dev": "npm run dev -w @voiceguard/api",
+    "dev:api": "npm run dev -w @voiceguard/api",
+    "dev:mobile": "npm run start -w @voiceguard/mobile"
+  }
+}
