@@ -35,6 +35,10 @@ app.post('/enrollments', (req, res) => {
   return res.status(201).json({ ok: true, enrollment: record });
 });
 
+app.get('/enrollments', (req, res) => {
+  return res.json({ ok: true, enrollments: Array.from(state.enrollments.values()) });
+});
+
 const AnalyzeSchema = z.object({
   claimedIdentity: z.string().min(1).optional(),
   // Placeholder. In a real implementation this would be audio bytes / URL.
@@ -80,6 +84,10 @@ app.post('/scams/report', (req, res) => {
   state.scamReports.push(report);
 
   return res.status(201).json({ ok: true, report });
+});
+
+app.get('/scams', (req, res) => {
+  return res.json({ ok: true, reports: state.scamReports });
 });
 
 const port = Number.parseInt(process.env.PORT ?? '8080', 10);
