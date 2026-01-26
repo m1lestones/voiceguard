@@ -14,6 +14,10 @@ Scammers are using AI voice cloning technology to impersonate family members and
 
 VoiceGuard aims to combine real-time voice analysis, biometric voice enrollment, and security-question verification to detect AI-cloned voices and prevent fraud before money is lost.
 
+## Documents
+
+- Product Requirements: `VoiceGuard_Product_Requirements_Document.md`
+
 ## Status
 
 This repository currently contains project metadata only (README, license, and gitignore). Add the application source code and update this README with setup/run instructions once the implementation is in place.
