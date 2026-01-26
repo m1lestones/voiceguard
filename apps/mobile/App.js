@@ -3,6 +3,39 @@ import { useMemo, useState } from 'react';
 import { Button, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import { apiGet, apiPost, getApiBaseUrl } from './src/api';
 
+function getStatusTheme(status) {
+  switch (status) {
+    case 'GREEN':
+      return {
+        label: 'Verified',
+        description: 'Safe to answer.',
+        borderColor: '#2e7d32',
+        backgroundColor: '#e8f5e9',
+      };
+    case 'YELLOW':
+      return {
+        label: 'Suspicious',
+        description: 'Proceed with caution.',
+        borderColor: '#f9a825',
+        backgroundColor: '#fff8e1',
+      };
+    case 'RED':
+      return {
+        label: 'Blocked',
+        description: 'Likely synthetic voice.',
+        borderColor: '#c62828',
+        backgroundColor: '#ffebee',
+      };
+    default:
+      return {
+        label: 'Unknown',
+        description: 'No status provided.',
+        borderColor: '#666',
+        backgroundColor: '#f5f5f5',
+      };
+  }
+}
+
 export default function App() {
   const apiBaseUrl = useMemo(() => getApiBaseUrl(), []);
 
@@ -128,6 +161,31 @@ export default function App() {
             </View>
             {verifyResult ? (
               <View style={styles.result}>
+                {verifyResult?.result?.status ? (
+                  <View
+                    style={[
+                      styles.statusCard,
+                      {
+                        borderColor: getStatusTheme(verifyResult.result.status).borderColor,
+                        backgroundColor: getStatusTheme(verifyResult.result.status).backgroundColor,
+                      },
+                    ]}
+                  >
+                    <Text style={styles.statusTitle}>
+                      {verifyResult.result.status} — {getStatusTheme(verifyResult.result.status).label}
+                    </Text>
+                    <Text style={styles.statusDescription}>
+                      {verifyResult.result.message || getStatusTheme(verifyResult.result.status).description}
+                    </Text>
+                    <Text style={styles.statusMeta}>
+                      Match score: {typeof verifyResult.result.matchScore === 'number' ? verifyResult.result.matchScore : '—'}
+                      {'  '}|{'  '}Synthetic probability:{' '}
+                      {typeof verifyResult.result.syntheticProbability === 'number'
+                        ? verifyResult.result.syntheticProbability
+                        : '—'}
+                    </Text>
+                  </View>
+                ) : null}
                 <Text style={styles.mono}>{JSON.stringify(verifyResult, null, 2)}</Text>
               </View>
             ) : null}
@@ -259,4 +317,13 @@ const styles = StyleSheet.create({
   },
   textarea: { minHeight: 90, textAlignVertical: 'top' },
   result: { marginTop: 10 },
+  statusCard: {
+    borderWidth: 1,
+    borderRadius: 10,
+    padding: 12,
+    marginBottom: 10,
+  },
+  statusTitle: { fontSize: 16, fontWeight: '800', marginBottom: 6 },
+  statusDescription: { fontSize: 14, marginBottom: 8 },
+  statusMeta: { fontSize: 12, color: '#333' },
 });
