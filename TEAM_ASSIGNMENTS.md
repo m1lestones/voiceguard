@@ -11,7 +11,7 @@
 
 ---
 
-## 👤 YOUR ASSIGNMENT: Backend Infrastructure & API
+## 👤 Ibrahima ASSIGNMENT: Backend Infrastructure & API
 
 ### Tasks:
 1. **Set up Backend Server** (2-3 days)
@@ -68,7 +68,7 @@ backend/
 
 ---
 
-## 👤 ELLIOT'S ASSIGNMENT: Frontend Integration & UI/UX
+## 👤 Juan'S ASSIGNMENT: Frontend Integration & UI/UX
 
 ### Tasks:
 1. **Connect Frontend to Backend** (2 days)
@@ -127,7 +127,7 @@ src/
 
 ---
 
-## 👤 JUAN'S ASSIGNMENT: Voice Analysis & ML Integration
+## 👤 Elliot'S ASSIGNMENT: Voice Analysis & ML Integration
 
 ### Tasks:
 1. **Research Free ML Services** (1 day)
