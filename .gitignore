@@ -9,6 +9,10 @@ lerna-debug.log*
 # macOS
 .DS_Store
 
+# Expo
+.expo/
+.expo-shared/
+
 # VS Code (keep workspace settings local by default)
 .vscode/
 !.vscode/extensions.json
