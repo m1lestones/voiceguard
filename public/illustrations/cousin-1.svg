@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 240" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="360" y2="240" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#7c5cff" stop-opacity="0.16"/>
+      <stop offset="0.55" stop-color="#fbbf24" stop-opacity="0.10"/>
+      <stop offset="1" stop-color="#00d4aa" stop-opacity="0.10"/>
+    </linearGradient>
+  </defs>
+  <rect x="12" y="12" width="336" height="216" rx="18" fill="url(#bg)" stroke="rgba(126,142,179,0.25)"/>
+
+  <circle cx="180" cy="92" r="34" fill="#9c6b5a"/>
+  <path d="M150 78c8-12 18-18 30-18 14 0 26 8 38 24-9 7-18 10-27 10-7 0-13-2-18-7-4 5-10 7-18 7-2 0-4 0-5-1z" fill="#2a2133" opacity="0.95"/>
+
+  <path d="M116 214c10-44 34-70 64-78 31 8 55 34 64 78" fill="#00d4aa" fill-opacity="0.14"/>
+  <path d="M138 214c6-29 22-48 42-56 20 8 36 27 42 56" fill="#0b1020" fill-opacity="0.28"/>
+
+  <g transform="translate(26 178)">
+    <rect x="0" y="0" width="118" height="30" rx="15" fill="rgba(124,92,255,0.14)" stroke="rgba(124,92,255,0.30)"/>
+    <path d="M18 16c6-10 16-10 22 0" stroke="#7c5cff" stroke-width="2.5" stroke-linecap="round"/>
+    <text x="76" y="20" font-family="DM Sans, system-ui" font-size="12" fill="rgba(234,240,255,0.85)" text-anchor="middle">For everyone</text>
+  </g>
+</svg>
