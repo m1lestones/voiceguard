@@ -1,8 +1,34 @@
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { getEnrolled } from '../lib/storage'
+import { getEnrollments } from '../lib/api'
+import type { EnrolledMember } from '../types'
 
 export function Home() {
-  const enrolled = getEnrolled()
+  const [enrolled, setEnrolled] = useState<EnrolledMember[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+
+  useEffect(() => {
+    let active = true
+    setLoading(true)
+    setError(null)
+    getEnrollments()
+      .then((list) => {
+        if (!active) return
+        setEnrolled(list)
+      })
+      .catch((e) => {
+        if (!active) return
+        setError(e instanceof Error ? e.message : 'Failed to load enrollments')
+      })
+      .finally(() => {
+        if (!active) return
+        setLoading(false)
+      })
+    return () => {
+      active = false
+    }
+  }, [])
 
   return (
     <div>
@@ -55,7 +81,15 @@ export function Home() {
         </Link>
       </div>
 
-      {enrolled.length > 0 && (
+      {loading && (
+        <p style={{ color: 'var(--text-muted)', margin: '0.5rem 0 0' }}>Loading enrolled members…</p>
+      )}
+
+      {!loading && error && (
+        <p style={{ color: 'var(--danger)', margin: '0.5rem 0 0' }}>{error}</p>
+      )}
+
+      {!loading && !error && enrolled.length > 0 && (
         <section>
           <h2 style={{ fontSize: '1rem', margin: '0 0 0.5rem' }}>Enrolled ({enrolled.length})</h2>
           <ul style={{ margin: 0, paddingLeft: '1.25rem', color: 'var(--text-muted)' }}>
