@@ -1,7 +1,15 @@
-import { useState, useCallback, useRef } from 'react'
+import { useState, useCallback, useRef, useEffect } from 'react'
 import type { VoicePrint } from '../types'
 
 const SAMPLE_RATE = 44100
+
+/** Stop all tracks on a stream and clear refs. Call this whenever we're done with the mic. */
+function releaseStream(stream: MediaStream | null): void {
+  if (!stream) return
+  stream.getTracks().forEach((t) => {
+    t.stop()
+  })
+}
 
 function getRms(samples: Float32Array): number {
   let sum = 0
@@ -47,7 +55,14 @@ export function useVoiceRecorder() {
   const start = useCallback(async () => {
     setError(null)
     try {
-      const stream = await navigator.mediaDevices.getUserMedia({ audio: { sampleRate: SAMPLE_RATE } })
+      // Release any previous stream so the browser doesn't block the next request
+      if (streamRef.current) {
+        releaseStream(streamRef.current)
+        streamRef.current = null
+        mediaRecorderRef.current = null
+      }
+      // Don't request exact sampleRate - some browsers/devices reject it and then block the mic
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true })
       streamRef.current = stream
       const recorder = new MediaRecorder(stream, { mimeType: 'audio/webm;codecs=opus' })
       mediaRecorderRef.current = recorder
@@ -65,12 +80,16 @@ export function useVoiceRecorder() {
       const rec = mediaRecorderRef.current
       const stream = streamRef.current
       if (!rec || rec.state === 'inactive') {
-        stream?.getTracks().forEach((t) => t.stop())
+        releaseStream(stream)
+        streamRef.current = null
+        mediaRecorderRef.current = null
         resolve(null)
         return
       }
       rec.onstop = async () => {
-        stream?.getTracks().forEach((t) => t.stop())
+        releaseStream(stream)
+        streamRef.current = null
+        mediaRecorderRef.current = null
         setIsRecording(false)
         const blobs = chunksRef.current
         if (blobs.length === 0) {
@@ -85,19 +104,30 @@ export function useVoiceRecorder() {
     })
   }, [])
 
+  // Release mic when component unmounts (e.g. user navigates away) so the browser doesn't keep it locked
+  useEffect(() => {
+    return () => {
+      if (streamRef.current) {
+        releaseStream(streamRef.current)
+        streamRef.current = null
+        mediaRecorderRef.current = null
+      }
+    }
+  }, [])
+
   return { isRecording, error, start, stop }
 }
 
 async function blobToVoicePrint(blob: Blob): Promise<VoicePrint | null> {
+  let ctx: AudioContext | null = null
   try {
     const arrayBuffer = await blob.arrayBuffer()
-    const ctx = new AudioContext({ sampleRate: SAMPLE_RATE })
+    ctx = new AudioContext()
     const buf = await ctx.decodeAudioData(arrayBuffer.slice(0))
     const ch = buf.getChannelData(0)
     const rms = getRms(ch)
     const zcr = getZcr(ch)
     const spectralCentroid = getSpectralCentroid(ctx, ch)
-    await ctx.close()
     return {
       rms,
       spectralCentroid,
@@ -108,6 +138,8 @@ async function blobToVoicePrint(blob: Blob): Promise<VoicePrint | null> {
     }
   } catch {
     return null
+  } finally {
+    if (ctx) await ctx.close()
   }
 }
 
