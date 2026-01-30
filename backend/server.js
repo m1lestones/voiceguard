@@ -3,6 +3,7 @@ import express from 'express'
 import cors from 'cors'
 import authRoutes from './routes/auth.js'
 import membersRoutes from './routes/members.js'
+import callsRoutes from './routes/calls.js'
 
 const app = express()
 const PORT = process.env.PORT || 3000
@@ -20,6 +21,9 @@ app.use('/api/auth', authRoutes)
 
 // Members: CRUD (requires JWT)
 app.use('/api/members', membersRoutes)
+
+// Call analysis (requires JWT)
+app.use('/api/calls', callsRoutes)
 
 // 404
 app.use((req, res) => {

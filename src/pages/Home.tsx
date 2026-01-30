@@ -1,14 +1,22 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { getEnrollments } from '../lib/api'
+import { useAuth } from '../contexts/AuthContext'
 import type { EnrolledMember } from '../types'
 
 export function Home() {
+  const { token } = useAuth()
   const [enrolled, setEnrolled] = useState<EnrolledMember[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
+    if (!token) {
+      setEnrolled([])
+      setError(null)
+      setLoading(false)
+      return
+    }
     let active = true
     setLoading(true)
     setError(null)
@@ -28,7 +36,7 @@ export function Home() {
     return () => {
       active = false
     }
-  }, [])
+  }, [token])
 
   return (
     <div>
@@ -200,7 +208,7 @@ export function Home() {
         </Link>
       </div>
 
-      {loading && (
+      {loading && token && (
         <p style={{ color: 'var(--text-muted)', margin: '0.5rem 0 0' }}>Loading enrolled members…</p>
       )}
 
@@ -208,7 +216,13 @@ export function Home() {
         <p style={{ color: 'var(--danger)', margin: '0.5rem 0 0' }}>{error}</p>
       )}
 
-      {!loading && !error && enrolled.length > 0 && (
+      {!loading && !token && (
+        <p style={{ color: 'var(--text-muted)', margin: '0.5rem 0 0' }}>
+          Log in to see your enrolled family members.
+        </p>
+      )}
+
+      {!loading && !error && token && enrolled.length > 0 && (
         <section>
           <h2 style={{ fontSize: '1rem', margin: '0 0 0.5rem' }}>Enrolled ({enrolled.length})</h2>
           <ul style={{ margin: 0, paddingLeft: '1.25rem', color: 'var(--text-muted)' }}>

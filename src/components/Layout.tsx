@@ -1,11 +1,19 @@
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useScrollTheme } from '../hooks/useScrollTheme'
+import { useAuth } from '../contexts/AuthContext'
 
 export function Layout({ children }: { children: React.ReactNode }) {
   const loc = useLocation()
+  const nav = useNavigate()
+  const { token, logout } = useAuth()
   const isHome = loc.pathname === '/'
 
   useScrollTheme()
+
+  const handleLogout = () => {
+    logout()
+    nav('/')
+  }
 
   return (
     <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
@@ -48,11 +56,30 @@ export function Layout({ children }: { children: React.ReactNode }) {
           <img src="/voiceguard.svg" alt="VoiceGuard" width={22} height={22} style={{ display: 'block' }} />
           <span>VoiceGuard</span>
         </Link>
-        <nav style={{ display: 'flex', gap: '1.25rem' }}>
+        <nav style={{ display: 'flex', gap: '1.25rem', alignItems: 'center' }}>
           <Link to="/" style={{ color: isHome ? 'var(--accent)' : 'var(--text-muted)' }}>Home</Link>
           <Link to="/enroll" style={{ color: loc.pathname === '/enroll' ? 'var(--accent)' : 'var(--text-muted)' }}>Enroll</Link>
           <Link to="/fraud-101" style={{ color: loc.pathname === '/fraud-101' ? 'var(--accent)' : 'var(--text-muted)' }}>Fraud 101</Link>
           <Link to="/stats" style={{ color: loc.pathname === '/stats' ? 'var(--accent)' : 'var(--text-muted)' }}>Stats</Link>
+          {token ? (
+            <button
+              type="button"
+              onClick={handleLogout}
+              style={{
+                padding: '0.4rem 0.75rem',
+                background: 'transparent',
+                border: '1px solid var(--border)',
+                borderRadius: 'var(--radius)',
+                color: 'var(--text-muted)',
+                cursor: 'pointer',
+                fontSize: '0.9rem',
+              }}
+            >
+              Log out
+            </button>
+          ) : (
+            <Link to="/auth" style={{ color: loc.pathname === '/auth' ? 'var(--accent)' : 'var(--text-muted)' }}>Log in</Link>
+          )}
         </nav>
 
         <div className="vg-scrollProgress" aria-hidden>
