@@ -1,9 +1,9 @@
 # VoiceGuard Team Assignments (3-Person Team)
 
 ## Team Members
-- **You** (Team Lead)
-- **Elliot**
-- **Juan**
+- **Ibrahima** (Team Lead / Backend)
+- **Juan** (Frontend)
+- **Elliot** (ML / Voice Analysis)
 
 ## Work Split Strategy
 
@@ -186,14 +186,14 @@ src/
 ## Week-by-Week Breakdown
 
 ### Week 1: Foundation
-- **You:** Backend setup + Database + Basic API endpoints
-- **Elliot:** API integration in frontend + Auth UI
-- **Juan:** Research ML services + Start integration
+- **Ibrahima:** Backend setup + Database + Basic API endpoints
+- **Juan:** API integration in frontend + Auth UI
+- **Elliot:** Research ML services + Start integration
 
 ### Week 2: Core Features
-- **You:** Complete API + Authentication backend
-- **Elliot:** Complete frontend integration + Error handling
-- **Juan:** Complete ML integration + Testing
+- **Ibrahima:** Complete API + Authentication backend
+- **Juan:** Complete frontend integration + Error handling
+- **Elliot:** Complete ML integration + Testing
 
 ### Week 3: Polish & Testing
 - **You:** API testing + Documentation

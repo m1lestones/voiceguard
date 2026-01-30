@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useVoiceRecorder } from '../hooks/useVoiceRecorder'
-import { addEnrolled } from '../lib/storage'
+import { createEnrollment } from '../lib/api'
 import type { VoicePrint, SecurityQA } from '../types'
 
 export function Enroll() {
@@ -14,6 +14,8 @@ export function Enroll() {
   const [a1, setA1] = useState('')
   const [q2, setQ2] = useState('')
   const [a2, setA2] = useState('')
+  const [saving, setSaving] = useState(false)
+  const [saveError, setSaveError] = useState<string | null>(null)
 
   const handleRecord = async () => {
     if (isRecording) {
@@ -28,20 +30,25 @@ export function Enroll() {
     if (samples.length >= 2) setStep('questions')
   }
 
-  const handleSave = () => {
+  const handleSave = async () => {
     const qa: SecurityQA[] = []
     if (q1.trim() && a1.trim()) qa.push({ question: q1.trim(), answer: a1.trim().toLowerCase() })
     if (q2.trim() && a2.trim()) qa.push({ question: q2.trim(), answer: a2.trim().toLowerCase() })
     if (qa.length < 1) return
-    const member = {
-      id: crypto.randomUUID(),
-      name: name.trim(),
-      voicePrints: samples,
-      securityQuestions: qa,
-      enrolledAt: new Date().toISOString(),
+
+    setSaving(true)
+    setSaveError(null)
+    try {
+      await createEnrollment({
+        familyMemberName: name.trim(),
+        voiceSample: JSON.stringify({ voicePrints: samples, securityQuestions: qa }),
+      })
+      setStep('done')
+    } catch (e) {
+      setSaveError(e instanceof Error ? e.message : 'Failed to enroll')
+    } finally {
+      setSaving(false)
     }
-    addEnrolled(member)
-    setStep('done')
   }
 
   if (step === 'name') {
@@ -138,6 +145,7 @@ export function Enroll() {
         <p style={{ color: 'var(--text-muted)', margin: '0 0 1rem' }}>
           Only {name} would know these. Used when a caller is flagged as suspicious.
         </p>
+        {saveError && <p style={{ color: 'var(--danger)', margin: '0 0 1rem' }}>{saveError}</p>}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', marginBottom: '1rem' }}>
           <div>
             <label style={{ display: 'block', marginBottom: '0.25rem', fontSize: '0.9rem' }}>Question 1</label>
@@ -207,7 +215,7 @@ export function Enroll() {
         <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
           <button
             onClick={handleSave}
-            disabled={!(q1.trim() && a1.trim())}
+            disabled={saving || !(q1.trim() && a1.trim())}
             style={{
               padding: '0.75rem 1.5rem',
               background: 'var(--accent)',
@@ -217,7 +225,7 @@ export function Enroll() {
               fontWeight: 600,
             }}
           >
-            Save and enroll
+            {saving ? 'Saving…' : 'Save and enroll'}
           </button>
           <button onClick={() => setStep('record')} style={{ padding: '0.75rem 1.5rem', background: 'transparent', border: 'none', color: 'var(--text-muted)' }}>
             Back

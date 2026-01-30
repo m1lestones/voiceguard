@@ -1,18 +1,42 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { getEnrolled } from '../lib/storage'
+import { analyzeCall, getEnrollments } from '../lib/api'
 import { useVoiceRecorder } from '../hooks/useVoiceRecorder'
 import { isSuspicious, getSuspicionScore } from '../lib/detection'
 import type { EnrolledMember, VoicePrint, CallState } from '../types'
 
 export function Call() {
   const nav = useNavigate()
-  const enrolled = getEnrolled()
+  const [enrolled, setEnrolled] = useState<EnrolledMember[]>([])
+  const [loading, setLoading] = useState(true)
+  const [loadError, setLoadError] = useState<string | null>(null)
   const { isRecording, error, start, stop } = useVoiceRecorder()
   const [state, setState] = useState<CallState>('idle')
   const [selected, setSelected] = useState<EnrolledMember | null>(null)
   const [analysis, setAnalysis] = useState<{ print: VoicePrint; score: number } | null>(null)
-  const [challengeMember, setChallengeMember] = useState<EnrolledMember | null>(null)
+  const [backendStatus, setBackendStatus] = useState<'GREEN' | 'YELLOW' | 'RED' | null>(null)
+
+  useEffect(() => {
+    let active = true
+    setLoading(true)
+    setLoadError(null)
+    getEnrollments()
+      .then((list) => {
+        if (!active) return
+        setEnrolled(list)
+      })
+      .catch((e) => {
+        if (!active) return
+        setLoadError(e instanceof Error ? e.message : 'Failed to load enrollments')
+      })
+      .finally(() => {
+        if (!active) return
+        setLoading(false)
+      })
+    return () => {
+      active = false
+    }
+  }, [])
 
   const handlePick = (m: EnrolledMember) => {
     setSelected(m)
@@ -34,6 +58,10 @@ export function Call() {
     }
     const score = getSuspicionScore(p, selected)
     setAnalysis({ print: p, score })
+    setBackendStatus(null)
+    analyzeCall({ claimedIdentity: selected.name, audioSample: JSON.stringify(p) })
+      .then((r) => setBackendStatus(r.status))
+      .catch(() => setBackendStatus(null))
     const suspicious = isSuspicious(p, selected)
     if (suspicious) {
       setState('challenge')
@@ -47,6 +75,37 @@ export function Call() {
     setState('idle')
     setSelected(null)
     setAnalysis(null)
+    setBackendStatus(null)
+  }
+
+  if (loading) {
+    return (
+      <div>
+        <h1 style={{ margin: '0 0 1rem' }}>Simulate incoming call</h1>
+        <p style={{ color: 'var(--text-muted)' }}>Loading enrolled members…</p>
+      </div>
+    )
+  }
+
+  if (!loading && loadError) {
+    return (
+      <div>
+        <h1 style={{ margin: '0 0 1rem' }}>Simulate incoming call</h1>
+        <p style={{ color: 'var(--danger)', margin: '0 0 1rem' }}>{loadError}</p>
+        <button
+          onClick={() => window.location.reload()}
+          style={{
+            padding: '0.75rem 1.5rem',
+            background: 'var(--bg-card)',
+            border: '1px solid var(--border)',
+            borderRadius: 'var(--radius)',
+            color: 'var(--text)',
+          }}
+        >
+          Retry
+        </button>
+      </div>
+    )
   }
 
   if (enrolled.length === 0) {
@@ -190,6 +249,11 @@ export function Call() {
         <p style={{ color: 'var(--text-muted)', margin: '0 0 1rem' }}>
           Voice matched {selected?.name}. Suspicion score: {analysis ? (analysis.score * 100).toFixed(0) : '—'}%
         </p>
+        {backendStatus && (
+          <p style={{ color: 'var(--text-muted)', margin: '-0.5rem 0 1rem' }}>
+            API analysis status: <strong>{backendStatus}</strong>
+          </p>
+        )}
         <button
           onClick={handleHangup}
           style={{
