@@ -75,7 +75,7 @@ export function useVoiceRecorder() {
     }
   }, [])
 
-  const stop = useCallback((): Promise<VoicePrint | null> => {
+  const stop = useCallback((): Promise<{ voicePrint: VoicePrint | null; blob: Blob | null }> => {
     return new Promise((resolve) => {
       const rec = mediaRecorderRef.current
       const stream = streamRef.current
@@ -83,7 +83,7 @@ export function useVoiceRecorder() {
         releaseStream(stream)
         streamRef.current = null
         mediaRecorderRef.current = null
-        resolve(null)
+        resolve({ voicePrint: null, blob: null })
         return
       }
       rec.onstop = async () => {
@@ -93,12 +93,12 @@ export function useVoiceRecorder() {
         setIsRecording(false)
         const blobs = chunksRef.current
         if (blobs.length === 0) {
-          resolve(null)
+          resolve({ voicePrint: null, blob: null })
           return
         }
         const blob = new Blob(blobs, { type: 'audio/webm' })
         const print = await blobToVoicePrint(blob)
-        resolve(print)
+        resolve({ voicePrint: print, blob })
       }
       rec.stop()
     })

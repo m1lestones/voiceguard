@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { analyzeCall, getEnrollments } from '../lib/api'
 import { useVoiceRecorder } from '../hooks/useVoiceRecorder'
 import { isSuspicious, getSuspicionScore } from '../lib/detection'
+import { transcribeWithDeepgram } from '../lib/ml-service'
 import type { EnrolledMember, VoicePrint, CallState } from '../types'
 
 export function Call() {
@@ -50,19 +51,20 @@ export function Call() {
   }
 
   const handleHangupAnalyzing = async () => {
-    const p = await stop()
-    if (!p || !selected) {
+    const { voicePrint, blob } = await stop()
+    if (!voicePrint || !selected) {
       setState('idle')
       setSelected(null)
       return
     }
-    const score = getSuspicionScore(p, selected)
-    setAnalysis({ print: p, score })
+    const mlResult = blob ? await transcribeWithDeepgram(blob) : null
+    const score = getSuspicionScore(voicePrint, selected, mlResult)
+    setAnalysis({ print: voicePrint, score })
     setBackendStatus(null)
-    analyzeCall({ claimedIdentity: selected.name, audioSample: JSON.stringify(p) })
+    analyzeCall({ claimedIdentity: selected.name, audioSample: JSON.stringify(voicePrint) })
       .then((r) => setBackendStatus(r.status))
       .catch(() => setBackendStatus(null))
-    const suspicious = isSuspicious(p, selected)
+    const suspicious = isSuspicious(voicePrint, selected, mlResult)
     if (suspicious) {
       setState('challenge')
       nav('/challenge', { state: { member: selected } })
