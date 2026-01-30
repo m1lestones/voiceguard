@@ -19,8 +19,8 @@ export function Enroll() {
 
   const handleRecord = async () => {
     if (isRecording) {
-      const p = await stop()
-      if (p) setSamples((s) => [...s, p])
+      const { voicePrint } = await stop()
+      if (voicePrint) setSamples((s) => [...s, voicePrint])
     } else {
       start()
     }
