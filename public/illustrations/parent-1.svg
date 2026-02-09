@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 240" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="360" y2="240" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#00d4aa" stop-opacity="0.18"/>
+      <stop offset="0.55" stop-color="#7c5cff" stop-opacity="0.12"/>
+      <stop offset="1" stop-color="#fbbf24" stop-opacity="0.10"/>
+    </linearGradient>
+  </defs>
+  <rect x="12" y="12" width="336" height="216" rx="18" fill="url(#bg)" stroke="rgba(126,142,179,0.25)"/>
+
+  <!-- person -->
+  <circle cx="180" cy="92" r="34" fill="#b9896a"/>
+  <path d="M151 88c8-20 22-30 43-30 16 0 29 9 37 24-4 1-9 2-13 2-8-12-15-17-24-17-12 0-22 7-29 21-6 1-10 1-14 0z" fill="#2a1f2a" opacity="0.95"/>
+
+  <path d="M116 214c10-44 34-70 64-78h0c31 8 55 34 64 78" fill="#00d4aa" fill-opacity="0.35"/>
+  <path d="M132 214c8-34 25-53 48-60 22 7 40 26 48 60" fill="#0b1020" fill-opacity="0.30"/>
+
+  <!-- badge -->
+  <g transform="translate(264 30)">
+    <rect x="0" y="0" width="70" height="28" rx="14" fill="rgba(0,212,170,0.18)" stroke="rgba(0,212,170,0.35)"/>
+    <path d="M14 14l4 4 8-10" stroke="#00d4aa" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="44" y="18" font-family="DM Sans, system-ui" font-size="12" fill="rgba(234,240,255,0.85)" text-anchor="middle">Verified</text>
+  </g>
+</svg>

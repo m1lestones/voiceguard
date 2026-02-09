@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 240" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="360" y2="240" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#ff4d6d" stop-opacity="0.10"/>
+      <stop offset="0.5" stop-color="#fbbf24" stop-opacity="0.10"/>
+      <stop offset="1" stop-color="#00d4aa" stop-opacity="0.10"/>
+    </linearGradient>
+  </defs>
+  <rect x="12" y="12" width="336" height="216" rx="18" fill="url(#bg)" stroke="rgba(126,142,179,0.25)"/>
+
+  <circle cx="180" cy="92" r="34" fill="#7b5a46"/>
+  <path d="M145 88c8-18 20-27 35-27 15 0 29 9 41 27-3 3-7 5-11 6-9-12-18-18-30-18-10 0-19 6-27 18-3-1-6-3-8-6z" fill="#e6eaf2" opacity="0.85"/>
+  <path d="M156 96c6 6 14 9 24 9 10 0 18-3 24-9" stroke="rgba(12,16,26,0.55)" stroke-width="2" stroke-linecap="round"/>
+
+  <path d="M116 214c10-44 34-70 64-78 31 8 55 34 64 78" fill="#7c5cff" fill-opacity="0.12"/>
+  <path d="M138 214c6-29 22-48 42-56 20 8 36 27 42 56" fill="#0b1020" fill-opacity="0.28"/>
+
+  <g transform="translate(252 178)">
+    <rect x="0" y="0" width="96" height="30" rx="15" fill="rgba(255,77,109,0.12)" stroke="rgba(255,77,109,0.28)"/>
+    <path d="M16 18l8-8 8 8" stroke="#ff4d6d" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="64" y="20" font-family="DM Sans, system-ui" font-size="12" fill="rgba(234,240,255,0.85)" text-anchor="middle">Protect</text>
+  </g>
+</svg>

@@ -1,7 +1,9 @@
 import express from 'express';
+import cors from 'cors';
 import { z } from 'zod';
 
 const app = express();
+app.use(cors());
 app.use(express.json({ limit: '2mb' }));
 
 // In-memory store for local development only.

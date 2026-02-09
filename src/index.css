@@ -1,0 +1,311 @@
+:root {
+  /* Base surfaces */
+  --bg: #070a12;
+  --bg-elevated: linear-gradient(180deg, rgba(20, 26, 38, 0.92), rgba(12, 16, 26, 0.92));
+  --bg-card: linear-gradient(180deg, rgba(26, 32, 48, 0.92), rgba(17, 21, 34, 0.92));
+  --border: rgba(126, 142, 179, 0.22);
+
+  /* Scroll-driven theme shift (0 → 1) */
+  --scroll-t: 0;
+  --scroll-hue-shift: calc(var(--scroll-t) * 220deg);
+
+  /* Text */
+  --text: #eaf0ff;
+  --text-muted: rgba(234, 240, 255, 0.62);
+
+  /* Fraud-prevention palette: safe (teal), alert (amber), danger (red), signal (violet) */
+  --accent: #00d4aa;
+  --accent-dim: #00a884;
+  --signal: #7c5cff;
+  --signal-dim: #5b3fff;
+  --warn: #fbbf24;
+  --warn-dim: #f59e0b;
+  --danger: #ff4d6d;
+  --danger-dim: #c24141;
+
+  /* Effects */
+  --ring: rgba(0, 212, 170, 0.42);
+  --shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+  --shadow-soft: 0 8px 18px rgba(0, 0, 0, 0.22);
+  --glow-accent: 0 0 0 1px rgba(0, 212, 170, 0.18), 0 0 24px rgba(0, 212, 170, 0.12);
+  --glow-warn: 0 0 0 1px rgba(251, 191, 36, 0.14), 0 0 24px rgba(251, 191, 36, 0.10);
+  --glow-danger: 0 0 0 1px rgba(255, 77, 109, 0.18), 0 0 26px rgba(255, 77, 109, 0.10);
+
+  --bg-gradient:
+    radial-gradient(
+      900px 520px at calc(10% + (var(--scroll-t) * 12%)) calc(10% + (var(--scroll-t) * 8%)),
+      hsl(calc(160deg + var(--scroll-hue-shift)) 85% 55% / 0.20),
+      transparent 55%
+    ),
+    radial-gradient(
+      900px 520px at calc(90% - (var(--scroll-t) * 10%)) calc(15% + (var(--scroll-t) * 10%)),
+      hsl(calc(265deg + var(--scroll-hue-shift)) 90% 64% / 0.14),
+      transparent 60%
+    ),
+    radial-gradient(
+      740px 500px at 50% calc(95% - (var(--scroll-t) * 14%)),
+      hsl(calc(40deg + var(--scroll-hue-shift)) 92% 60% / 0.12),
+      transparent 55%
+    ),
+    radial-gradient(
+      920px 580px at calc(85% - (var(--scroll-t) * 12%)) calc(85% - (var(--scroll-t) * 6%)),
+      hsl(calc(350deg + var(--scroll-hue-shift)) 90% 60% / 0.11),
+      transparent 60%
+    ),
+    linear-gradient(180deg, #070a12, #070a12);
+
+  --radius: 12px;
+  --font-sans: 'DM Sans', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: var(--font-sans);
+  background: var(--bg-gradient);
+  color: var(--text);
+  line-height: 1.5;
+}
+
+/* Subtle texture overlay (adds depth without clutter) */
+.vg-backdrop {
+  position: fixed;
+  inset: 0;
+}
+
+.vg-backdrop::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.08;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180' viewBox='0 0 180 180'%3E%3Crect width='180' height='180' fill='transparent'/%3E%3Cg fill='white' fill-opacity='0.55'%3E%3Ccircle cx='12' cy='18' r='1'/%3E%3Ccircle cx='38' cy='44' r='1'/%3E%3Ccircle cx='64' cy='22' r='1'/%3E%3Ccircle cx='92' cy='58' r='1'/%3E%3Ccircle cx='118' cy='26' r='1'/%3E%3Ccircle cx='146' cy='68' r='1'/%3E%3Ccircle cx='18' cy='112' r='1'/%3E%3Ccircle cx='52' cy='96' r='1'/%3E%3Ccircle cx='84' cy='128' r='1'/%3E%3Ccircle cx='124' cy='110' r='1'/%3E%3Ccircle cx='156' cy='132' r='1'/%3E%3Ccircle cx='104' cy='154' r='1'/%3E%3C/g%3E%3Cg fill='white' fill-opacity='0.28'%3E%3Ccircle cx='28' cy='70' r='0.9'/%3E%3Ccircle cx='74' cy='86' r='0.9'/%3E%3Ccircle cx='136' cy='104' r='0.9'/%3E%3Ccircle cx='168' cy='28' r='0.9'/%3E%3Ccircle cx='10' cy='150' r='0.9'/%3E%3C/g%3E%3C/svg%3E");
+  background-size: 180px 180px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vg-backdrop::before { opacity: 0.05; }
+}
+
+/* Global polish */
+.vg-header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  backdrop-filter: blur(10px);
+}
+
+:root[data-scrolled="1"] .vg-header {
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.28);
+  border-bottom-color: rgba(126, 142, 179, 0.32);
+}
+
+.vg-scrollProgress {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.vg-scrollProgressFill {
+  height: 100%;
+  width: calc(var(--scroll-t) * 100%);
+  background: linear-gradient(90deg, var(--accent), var(--signal), var(--warn), var(--danger));
+  box-shadow: 0 0 18px rgba(0, 212, 170, 0.25);
+}
+
+.vg-backToTop {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  z-index: 30;
+  padding: .55rem .75rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(12, 16, 26, 0.72);
+  color: var(--text);
+  box-shadow: var(--shadow-soft);
+  opacity: 0;
+  transform: translateY(10px);
+  pointer-events: none;
+}
+
+:root[data-scrolled="1"] .vg-backToTop {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.vg-backToTop:hover {
+  box-shadow: var(--shadow), var(--glow-accent);
+}
+
+/* Route/page transition */
+.vg-page {
+  animation: vgPageIn 220ms ease;
+}
+
+@keyframes vgPageIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Card polish (works even when cards are inline-styled) */
+.vg-main section {
+  transition: transform 160ms ease, box-shadow 220ms ease, border-color 220ms ease;
+  will-change: transform;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .vg-main section:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow) !important;
+    border-color: rgba(0, 212, 170, 0.28) !important;
+  }
+}
+
+.vg-cardLink {
+  transition: transform 160ms ease, box-shadow 220ms ease, border-color 220ms ease, filter 160ms ease;
+  will-change: transform;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .vg-cardLink:hover {
+    text-decoration: none;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow) !important;
+    border-color: rgba(0, 212, 170, 0.28) !important;
+    filter: saturate(1.04);
+  }
+}
+
+/* Feature chips */
+.vg-chipRow {
+  display: flex;
+  gap: .45rem;
+  flex-wrap: wrap;
+  margin-top: .55rem;
+}
+
+.vg-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  padding: .22rem .55rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.03);
+  color: rgba(234, 240, 255, 0.78);
+  font-size: .78rem;
+  line-height: 1.25;
+}
+
+.vg-chipDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 2px rgba(0, 212, 170, 0.12);
+}
+
+.vg-chipDot--signal { background: var(--signal); box-shadow: 0 0 0 2px rgba(124, 92, 255, 0.12); }
+.vg-chipDot--warn { background: var(--warn); box-shadow: 0 0 0 2px rgba(251, 191, 36, 0.12); }
+.vg-chipDot--danger { background: var(--danger); box-shadow: 0 0 0 2px rgba(255, 77, 109, 0.12); }
+
+/* Pills (Stats modes, etc.) */
+.vg-pill {
+  position: relative;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .vg-pill:hover {
+    box-shadow: var(--shadow-soft), var(--glow-accent) !important;
+    border-color: rgba(0, 212, 170, 0.30) !important;
+  }
+}
+
+.vg-pill--active {
+  box-shadow: 0 0 0 3px rgba(54, 215, 204, 0.12) !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .vg-backToTop { transition: none; }
+  .vg-scrollProgressFill { transition: none; }
+  .vg-page { animation: none; }
+  .vg-main section { transition: none; }
+  .vg-cardLink { transition: none; }
+}
+
+#root {
+  min-height: 100vh;
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+  text-decoration-color: rgba(0, 212, 170, 0.65);
+  text-underline-offset: 3px;
+}
+
+::selection {
+  background: rgba(0, 212, 170, 0.22);
+}
+
+:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  transition: transform 120ms ease, filter 120ms ease, box-shadow 160ms ease, opacity 120ms ease;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+button:not(:disabled):active {
+  transform: translateY(1px);
+}
+
+input {
+  transition: box-shadow 160ms ease, border-color 160ms ease;
+}
+
+input:focus {
+  outline: none;
+  box-shadow: var(--glow-accent);
+  border-color: rgba(0, 212, 170, 0.35);
+}
+
+h1, h2, h3 {
+  letter-spacing: -0.02em;
+}
